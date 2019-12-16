@@ -13,8 +13,8 @@ public class UserController {
     UserService userService;
 
     @RequestMapping(value = {"/login" }, method = RequestMethod.POST)
-    public String login(@RequestParam String full_name, String password) {
-        userService.login(full_name, password);
+    public String login(@RequestParam String login, String password) {
+        userService.login(login, password);
         return "success";
     }
 }

@@ -3,7 +3,6 @@ package ru.chat.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity
@@ -18,30 +17,16 @@ public class User {
     /**
      * Электронная почта пользователя
      */
-    @Column
+    @Column(name = "e_mail")
     private String eMail;
     /**
      * Имя пользователя
      */
-    @Column
+    @Column(name = "full_name")
     private String fullName;
     /**
      * Пароль пользователя
      */
-    @Column
+    @Column(name = "password")
     private String password;
-    /**
-     * Чаты пользователя
-     */
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name="chat_user",
-            joinColumns = @JoinColumn(name="id_user", referencedColumnName="id_user"),
-            inverseJoinColumns = @JoinColumn(name="id_chat", referencedColumnName="id_chat")
-    )
-    private List<Chat> chats;
-    /**
-     * Сообщения пользователя
-     */
-    @OneToMany
-    private List<Message> messages;
 }

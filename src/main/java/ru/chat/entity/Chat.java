@@ -3,7 +3,6 @@ package ru.chat.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity
@@ -12,14 +11,12 @@ public class Chat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_chat")
     protected Long idChat;
 
     @Column
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "chats")
-    private List<User> users;
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "recipientChat")
-    private List<Message> messages;
+    //@OneToMany(fetch = FetchType.EAGER, mappedBy = "recipientUser")
+    //private List<User> users;
 }

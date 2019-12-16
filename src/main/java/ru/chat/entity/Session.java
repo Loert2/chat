@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Entity
@@ -13,6 +12,7 @@ public class Session {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_session")
     protected Long idSession;
 
     @Column
@@ -21,6 +21,6 @@ public class Session {
     @Column
     private LocalDateTime updatedAt;
 
-    @OneToMany
-    private List<User> users;
+    //@OneToMany
+    //private List<User> users;
 }
