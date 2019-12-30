@@ -12,8 +12,7 @@ public class Session {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_session")
-    protected Long idSession;
+    protected Long id;
 
     @Column
     private Boolean status;
@@ -21,6 +20,11 @@ public class Session {
     @Column
     private LocalDateTime updatedAt;
 
-    //@OneToMany
-    //private List<User> users;
+    @Column
+    private String webSocketSession;
+
+    @JoinColumn
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User sender;
+
 }

@@ -1,0 +1,26 @@
+.separator {
+  color: #ffffff;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.element-info {
+  background-color: #ffffff;
+  height: 300px;
+  width: 100%;
+}
+.name-compony {
+  font-family: serif;
+  font-size: 300%;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+.element-header-main-page {
+  background-color: #3adbfd;
+  display: flex;
+  height: 50px;
+}

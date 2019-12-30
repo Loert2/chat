@@ -1,0 +1,79 @@
+.container {
+  max-width: 450px;
+  background-color: rgba(24, 33, 52, 0.7);
+  margin: 50px auto 0 auto;
+  box-shadow: 0 -5px 0 #3adbfd;
+  padding-bottom: 20px;
+  border-radius: 10px;
+}
+
+input[type="password"] {
+  width: 300px;
+  height: 50px;
+  font-size: 18px;
+  margin-bottom: 25px;
+  border-radius: 10px;
+  padding-left: 10px;
+  box-sizing: border-box;
+}
+input.text {
+  width: 300px;
+  height: 50px;
+  font-size: 18px;
+  margin-bottom: 25px;
+  border-radius: 10px;
+  padding-left: 10px;
+  box-sizing: border-box;
+}
+.dws-submit {
+  padding: 13px 30px;
+  margin: 5px 0 20px 0;
+  font-size: 15px;
+  color: #fff;
+  background-color: #2ca8c6;
+  border: none;
+  border-bottom: 4px solid #6ee9fd;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.dws-submit:hover {
+  transition: all 0.5s;
+  background: #fff;
+  color: #2c536c;
+}
+.auth-form-body {
+  padding: 60px;
+  font-size: 14px;
+}
+label {
+  display: block;
+  font-size: 17px;
+  color: #6ee9fd;
+}
+label.topAndButtom {
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+.button {
+  text-align: center;
+  text-decoration: none;
+}
+a {
+  color: #fff;
+}
+a:hover {
+  text-decoration: none;
+}
+
+.app-logo {
+  height: 120px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.containerLog {
+  padding-top: 32px !important;
+}
+.error {
+  color: #ff0000;
+}

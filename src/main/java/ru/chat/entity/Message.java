@@ -12,8 +12,7 @@ public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_message")
-    protected Long idMessage;
+    protected Long id;
 
     @Column
     private String text;
@@ -21,7 +20,11 @@ public class Message {
     @Column
     private LocalDateTime time;
 
-    //@JoinColumn
-    //@ManyToOne(fetch = FetchType.EAGER)
-    //private Chat recipientChat;
+    @JoinColumn
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User sender;
+
+    @JoinColumn
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Chat recipientChat;
 }

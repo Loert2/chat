@@ -15,7 +15,13 @@ public class UserController {
     @RequestMapping(value = {"/login" }, method = RequestMethod.POST)
     public String login(@RequestParam String login, String password) {
         userService.login(login, password);
-        return "success";
+        return login;
+    }
+
+    @RequestMapping(value = {"/registration" }, method = RequestMethod.POST)
+    public String registration(@RequestParam String login, String eMail, String password) {
+        userService.registration(login, eMail, password);
+        return login;
     }
 }
 

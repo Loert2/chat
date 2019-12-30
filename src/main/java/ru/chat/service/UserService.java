@@ -13,11 +13,21 @@ public class UserService {
     }
 
     public void login(String login, String password){
-        if(!userRepository.existsByName(login)) {
+        if(!userRepository.existsByFullName(login)) {
             User user = new User();
             user.setFullName(login);
             user.setPassword(password);
             userRepository.save(user);
         }
     }
+
+    /*public void registration(String login, String eMail, String password){
+        if(!userRepository.existsByFullName(login)) {
+            User user = new User();
+            user.setFullName(login);
+            user.setEMail(eMail);
+            user.setPassword(password);
+            userRepository.save(user);
+        }
+    }*/
 }
