@@ -8,7 +8,8 @@ export const registrationUser = ({ login, password }) => dispatch => {
 
   request({
     type: "POST",
-    url: 'login?' + new URLSearchParams({ login, password })
+    url: 'login',
+    data: { fullName: login, password }
   })
     .then(response => {
       dispatch(user.createOrLoad.success(response));

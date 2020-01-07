@@ -24,32 +24,9 @@ class Authorisation extends Component {
   ];
 
   handleAuhtSubmit = ({ login, password }) => {
-    fetch("http://localhost:8900/login", {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      credentials: "same-origin",
-      body: JSON.stringify({ fullName: login, password })
-    })
-      .then(response => {
-        console.log(response);
-        response.json();
-      })
-      .then(result => {
-        console.log(result);
-        this.props.history.push(`chat/${result}`);
-      })
-      .catch(error => {
-        console.error("Error:", error);
-      });
-  };
-
-  /*handleAuhtSubmit = ({ login, password }) => {
     const { registrationUser } = this.props.userService;
     registrationUser({ login, password }); 
-  };*/
+  };
 
   render() {
     const { user } = this.props;
