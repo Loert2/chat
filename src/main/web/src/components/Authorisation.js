@@ -1,8 +1,12 @@
 import React, { Component } from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import Form from "./Form";
 
+import * as userService from "../store/user/service";
+import * as catalogSelectors from "../store/selectors";
+
 class Authorisation extends Component {
-  state = {};
   fileds = [
     {
       name: "login",
@@ -20,40 +24,52 @@ class Authorisation extends Component {
   ];
 
   handleAuhtSubmit = ({ login, password }) => {
-    fetch(
-      "http://localhost:8900/login?" + new URLSearchParams({ login, password }),
-      {
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }
-    )
+    fetch("http://localhost:8900/login", {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "same-origin",
+      body: JSON.stringify({ fullName: login, password })
+    })
       .then(response => {
         console.log(response);
         response.json();
       })
       .then(result => {
-        this.setState({ login: result });
-        this.props.history.push("/chat");
+        console.log(result);
+        this.props.history.push(`chat/${result}`);
       })
       .catch(error => {
         console.error("Error:", error);
-        this.setState({ error: "Неправильный логин или пароль" });
       });
   };
 
+  /*handleAuhtSubmit = ({ login, password }) => {
+    const { registrationUser } = this.props.userService;
+    registrationUser({ login, password }); 
+  };*/
+
   render() {
+    const { user } = this.props;
     return (
       <Form
         fileds={this.fileds}
         button="Войти"
         onSubmit={this.handleAuhtSubmit}
-        error={this.state.error}
+        error={user && user.error}
       />
     );
   }
 }
 
-export default Authorisation;
+const mapStateToProps = state => ({
+  user: catalogSelectors.getUser(state)
+});
+
+const mapDispatchToProps = dispatch => ({
+  userService: bindActionCreators(userService, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Authorisation);

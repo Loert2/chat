@@ -6,6 +6,6 @@ import ru.chat.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    //User findByName(String fullName);
+    User findByFullName(String fullName);
     boolean existsByFullName(String login);
 }

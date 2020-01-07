@@ -20,7 +20,7 @@ function App() {
   return (
     <Switch>
       <Route path="/" component={Authorisation} />
-      <Route path="/chat" component={Chat} />
+      <Route path="/chat/:login" component={Chat} />
     </Switch>
   );
 }

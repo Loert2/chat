@@ -1,21 +1,23 @@
 package ru.chat.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import ru.chat.entity.User;
 import ru.chat.service.UserService;
 
-@Controller
+@RestController
 public class UserController {
 
     @Autowired
     UserService userService;
 
     @RequestMapping(value = {"/login" }, method = RequestMethod.POST)
-    public String login(@RequestParam String login, @RequestParam String password) {
-        userService.login(login, password);
-        return login;
+    public User login(@RequestBody User user) {
+        User addOrLoadUser = userService.login(user);
+        return addOrLoadUser;
     }
-
 }
 

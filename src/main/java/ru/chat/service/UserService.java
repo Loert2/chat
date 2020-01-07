@@ -12,22 +12,13 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void login(String login, String password){
-        if(!userRepository.existsByFullName(login)) {
-            User user = new User();
-            user.setFullName(login);
-            user.setPassword(password);
-            userRepository.save(user);
+    public User login(User user){
+        if(!userRepository.existsByFullName(user.getFullName())) {
+            User newUser = userRepository.save(user);
+            return newUser;
+        } else {
+            User loadUser = userRepository.findByFullName(user.getFullName());
+            return loadUser;
         }
     }
-
-    /*public void registration(String login, String eMail, String password){
-        if(!userRepository.existsByFullName(login)) {
-            User user = new User();
-            user.setFullName(login);
-            user.setEMail(eMail);
-            user.setPassword(password);
-            userRepository.save(user);
-        }
-    }*/
 }
