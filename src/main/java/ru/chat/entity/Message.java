@@ -26,5 +26,9 @@ public class Message {
 
     @JoinColumn
     @ManyToOne(fetch = FetchType.EAGER)
+    private User recipientUser;
+
+    @JoinColumn
+    @ManyToOne(fetch = FetchType.EAGER)
     private Chat recipientChat;
 }

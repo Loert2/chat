@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
 public interface ChatRepository extends JpaRepository<Chat, Long> {
-    Chat findRoomByName(String name);
+    Chat findChatByName(String name);
     boolean existsByName(String name);
 }
