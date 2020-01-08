@@ -25,7 +25,8 @@ class Authorisation extends Component {
 
   handleAuhtSubmit = ({ login, password }) => {
     const { registrationUser } = this.props.userService;
-    registrationUser({ login, password }); 
+    registrationUser({ login, password });
+    this.props.history.push('chat');
   };
 
   render() {

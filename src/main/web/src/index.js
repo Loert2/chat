@@ -12,6 +12,7 @@ import { default as thunk } from "redux-thunk";
 import "./assets/css/index.css";
 import "./assets/css/main.css";
 import "./assets/css/auth.css";
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import App from "./App";
 
 const middleware = [thunk, logger];

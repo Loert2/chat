@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.chat.entity.User;
 import ru.chat.service.UserService;
 
+import java.util.List;
+
 @RestController
 public class UserController {
 
@@ -18,6 +20,11 @@ public class UserController {
     public User login(@RequestBody User user) {
         User addOrLoadUser = userService.login(user);
         return addOrLoadUser;
+    }
+
+    @RequestMapping(value = "/getListUser", method = RequestMethod.GET)
+    public List<User> getListUser() {
+        return userService.getUser();
     }
 }
 

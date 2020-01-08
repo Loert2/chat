@@ -7,7 +7,7 @@ function App() {
   return (
     <Switch>
       <Route exact path="/" component={Authorisation} />
-      <Route path="/chat/:login" component={Chat} />
+      <Route path="/chat" component={Chat} />
     </Switch>
   );
 }

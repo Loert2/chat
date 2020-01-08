@@ -23,16 +23,13 @@ public class ChatService {
         return chatRepository.findAll();
     }
 
-    public List<User> getUser(){
-        return userRepository.findAll();
-    }
-
-    public Chat addChat(String name){
-        if(!chatRepository.existsByName(name)) {
+    public List<Chat> addChat(String chatName){
+        if(!chatRepository.existsByName(chatName)) {
             Chat chat = new Chat();
-            chat.setName(name);
-            Chat chatNew = chatRepository.save(chat);
-            return chatNew;
+            chat.setName(chatName);
+            chatRepository.save(chat);
+            List<Chat> chatList = chatRepository.findAll();
+            return chatList;
         }
         return null;
     }

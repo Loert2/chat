@@ -76,7 +76,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
                 for (ChatSession s : sessions) {
                     s.getWebSocketSession().sendMessage(getMessage(TypeOfNotice.NEW_USER, event.getUser()));
                 }
-                if(event.getChatType() == ChatType.PRIVATE) {
+                if (event.getChatType() == ChatType.PRIVATE) {
                     for (Message chatMessage : messageRepository.findAllMessagesForSenderAndRecipient(event.getUser(), event.getRecipient())) {
                         if (chatMessage.getSender().getFullName().equals(event.getUser())) {
                             session.sendMessage(getMessage(TypeOfNotice.MESSAGE, chatMessage.getText()));
@@ -87,10 +87,12 @@ public class WebSocketHandler extends TextWebSocketHandler {
                 } else {
                     Chat chat = chatRepository.findChatByName(event.getRecipient());
                     User user = userRepository.findByFullName(event.getUser());
-                    if(!user.getChats().contains(chat)) {
+                    int number = user.getChats().indexOf(chat);
+                    //TODO условия contains и indexOf не работают из-за persistenceBug массивов chats и message в user
+                    if (!findChatName(chat.getName(), user.getChats())) {
                         user.getChats().add(chat);
+                        userRepository.save(user);
                     }
-                    userRepository.save(user);
                     for (ChatSession chatSession:sessions) {
                         if (chatSession.getSender().equals(event.getUser())
                                 && chatSession.getRecipient().equals(event.getRecipient())
@@ -102,8 +104,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
                             }
                         }
                     }
-                    for (Message roomMessage : chat.getMessages()) {
-                        session.sendMessage(getMessage(TypeOfNotice.MESSAGE, roomMessage.getSender().getFullName() + " : " + roomMessage.getText()));
+                    for (Message chatMessage : chat.getMessages()) {
+                        session.sendMessage(getMessage(TypeOfNotice.MESSAGE, chatMessage.getSender().getFullName() + " : " + chatMessage.getText()));
                     }
                 }
                 break;
@@ -111,7 +113,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
                 for (ChatSession chatSession : sessions) {
                     if(chatSession.getWebSocketSession().getId().equals(session.getId())) {
 
-                        if(chatSession.getChatType() == ChatType.PRIVATE) {
+                        if (chatSession.getChatType() == ChatType.PRIVATE) {
                             Message messageToSave = new Message();
                             messageToSave.setTime(LocalDateTime.now());
                             messageToSave.setSender(userRepository.findByFullName(chatSession.getSender()));
@@ -125,7 +127,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
                             for (ChatSession s : sessions) {
                                 if (s.getSender().equals(chatSession.getRecipient())) {
                                     recipientChatSessionPush = s;
-                                    if(s.getRecipient().equals(chatSession.getSender())){
+                                    if (s.getRecipient().equals(chatSession.getSender())){
                                         recipientChatSession = s;
                                     }
                                 }
@@ -166,7 +168,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
                             messageToSave.getRecipientChat().getUsers().stream()
                                     .map(u -> {
                                         for (ChatSession chatSessionPush : sessions) {
-                                            if(u.getFullName().equals(chatSessionPush.getSender())) {
+                                            if (u.getFullName().equals(chatSessionPush.getSender())) {
                                                 return chatSessionPush;
                                             }
                                         }
@@ -205,4 +207,16 @@ public class WebSocketHandler extends TextWebSocketHandler {
             }
         }
     }
+
+    public boolean findChatName(
+            String name, List<Chat> chats) {
+
+        for (Chat chat : chats) {
+            if (chat.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

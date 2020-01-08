@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.chat.entity.Chat;
 import ru.chat.service.ChatService;
 
+import java.util.List;
+
 @RestController
 public class ChatController {
 
@@ -12,13 +14,18 @@ public class ChatController {
     ChatService chatService;
 
     @RequestMapping(value = "/addChat", method = RequestMethod.POST)
-    public Chat addChat(@RequestBody String chatName) {
-        Chat chatNew = chatService.addChat(chatName);
-        return chatNew;
+    public List<Chat> addChat(@RequestBody String chatName) {
+        List<Chat> chatList = chatService.addChat(chatName);
+        return chatList;
     }
 
     @RequestMapping(value = "/deleteChat/{id}", method = RequestMethod.GET)
     public void deleteChat(@PathVariable Long id) {
         chatService.deleteChat(id);
+    }
+
+    @RequestMapping(value = "/getListChat", method = RequestMethod.GET)
+    public List<Chat> getListChat() {
+        return chatService.getChat();
     }
 }

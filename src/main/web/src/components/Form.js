@@ -12,7 +12,7 @@ class Form extends Component {
   render() {
     return (
       <div className="containerLog">
-        <div className="container">
+        <div className="containerAuth">
           <form onSubmit={this.handleSubmit}>
             <div className="auth-form-body">
               {this.props.fileds.map(el => (
