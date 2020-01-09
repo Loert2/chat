@@ -81,13 +81,12 @@ public class WebSocketHandler extends TextWebSocketHandler {
                         if (chatMessage.getSender().getFullName().equals(event.getUser())) {
                             session.sendMessage(getMessage(TypeOfNotice.MESSAGE, chatMessage.getText()));
                         } else {
-                            session.sendMessage(getMessage(TypeOfNotice.MESSAGE, chatMessage.getSender().getFullName() + " : " + chatMessage.getText()));
+                            session.sendMessage(getMessage(TypeOfNotice.MESSAGE, chatMessage.getSender().getFullName() + " > " + chatMessage.getText()));
                         }
                     }
                 } else {
                     Chat chat = chatRepository.findChatByName(event.getRecipient());
                     User user = userRepository.findByFullName(event.getUser());
-                    int number = user.getChats().indexOf(chat);
                     //TODO условия contains и indexOf не работают из-за persistenceBug массивов chats и message в user
                     if (!findChatName(chat.getName(), user.getChats())) {
                         user.getChats().add(chat);
@@ -105,7 +104,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
                         }
                     }
                     for (Message chatMessage : chat.getMessages()) {
-                        session.sendMessage(getMessage(TypeOfNotice.MESSAGE, chatMessage.getSender().getFullName() + " : " + chatMessage.getText()));
+                        session.sendMessage(getMessage(TypeOfNotice.MESSAGE, chatMessage.getSender().getFullName() + " > " + chatMessage.getText()));
                     }
                 }
                 break;
@@ -134,12 +133,12 @@ public class WebSocketHandler extends TextWebSocketHandler {
                             }
                             if (recipientChatSession != null) {
                                 recipientChatSession.getWebSocketSession().sendMessage(
-                                        getMessage(TypeOfNotice.MESSAGE, chatSession.getSender() + " : " + event.getText())
+                                        getMessage(TypeOfNotice.MESSAGE, chatSession.getSender() + " > " + event.getText())
                                 );
                             }
                             if (recipientChatSessionPush != null) {
                                 recipientChatSessionPush.getWebSocketSession().sendMessage(
-                                        getMessage(TypeOfNotice.PUSH_MESSAGE, chatSession.getSender() + " : " + event.getText())
+                                        getMessage(TypeOfNotice.PUSH_MESSAGE, chatSession.getSender() + " > " + event.getText())
                                 );
                             }
                         } else {
@@ -161,7 +160,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
                             if (!CollectionUtils.isEmpty(recipientChatSessions)) {
                                 for (ChatSession recipientChatSession : recipientChatSessions) {
                                     recipientChatSession.getWebSocketSession().sendMessage(
-                                            getMessage(TypeOfNotice.MESSAGE, chatSession.getSender() + " : " + event.getText())
+                                            getMessage(TypeOfNotice.MESSAGE, chatSession.getSender() + " > " + event.getText())
                                     );
                                 }
                             }
@@ -178,7 +177,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
                                     .forEach(c -> {
                                         try {
                                             c.getWebSocketSession().sendMessage(
-                                                    getMessage(TypeOfNotice.PUSH_MESSAGE, chatSession.getSender() + " : " + event.getText())
+                                                    getMessage(TypeOfNotice.PUSH_MESSAGE, chatSession.getSender() + " > " + event.getText())
                                             );
                                         } catch (IOException e) {
                                             e.printStackTrace();

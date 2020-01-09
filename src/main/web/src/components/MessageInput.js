@@ -5,10 +5,12 @@ class MessageInput extends Component {
 
   sendMessage = event => {
     event.preventDefault();
-    this.props.socketConn.send(JSON.stringify({
+    this.props.socketConn.send(
+      JSON.stringify({
         type: "MESSAGE",
         text: this.state.value
-    }));
+      })
+    );
   };
 
   handleChange = event => {
@@ -18,17 +20,17 @@ class MessageInput extends Component {
 
   render() {
     return (
-      <form className="form-inline" onSubmit={this.sendMessage}>
-        <div className="form-group nav">
+      <form className="container row" onSubmit={this.sendMessage}>
+        <div className="form-group nav col-xs-14 col-md-8">
           <input
             type="text"
-            className="form-control col-md-10"
+            className="form-control"
             placeholder="Сообщение"
             onChange={this.handleChange}
           />
         </div>
-        <div className="button">
-          <input type="submit" className="dws-submit" value="Отправить" />
+        <div className="btn button-send">
+          <input type="submit" className="form-control btn-secondary" value="Отправить" />
         </div>
       </form>
     );

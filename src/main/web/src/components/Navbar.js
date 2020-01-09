@@ -10,7 +10,7 @@ class Navbar extends Component {
       <div className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
           <a href="/" className="navbar-brand ml-auto">
-            <h4>{user && user.fullName}f</h4>
+            <h4>{user && user.fullName}</h4>
           </a>
         </div>
       </div>

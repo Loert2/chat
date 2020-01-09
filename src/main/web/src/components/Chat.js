@@ -9,11 +9,16 @@ import UserList from "./UserList";
 import * as catalogSelectors from "../store/selectors";
 
 class Chat extends Component {
-  state = {};
+  state = {
+    messageList: []
+  };
 
   setCurrentChat = (name, type) => {
     const { user } = this.props;
     var socketConn = new WebSocket("ws://localhost:8900/txtSocketHandler");
+
+    this.setState({ currentChat: name });
+    this.setState({ messageList: [] });
 
     socketConn.onmessage = e => {
       this.showMessage(e.data);
@@ -29,9 +34,7 @@ class Chat extends Component {
           recipient: name
         })
       );
-      console.log(
-        "Connection established: " + user && user.fullName + " -> " + name
-      );
+      console.log("Connection: " + user && user.fullName + " > " + name);
     };
 
     socketConn.onclose = event => {
@@ -46,19 +49,18 @@ class Chat extends Component {
     socketConn.onerror = error => {
       console.log("error " + error.message);
     };
-
+    this.setState({ socketConn: socketConn });
   };
 
   showMessage = message => {
     var messageObj = JSON.parse(message);
     if (messageObj.type === "MESSAGE") {
-      console.log(messageObj.text);
+      this.setState(prevState => ({
+        messageList: [...prevState.messageList, { message: messageObj.text }]
+      }));
     }
     if (messageObj.type === "NEW_USER") {
       this.isOnlin(true, messageObj.text);
-    }
-    if (messageObj.type === "DELETE_USER") {
-      this.isOnlin(false, messageObj.text);
     }
     if (messageObj.type === "PUSH_MESSAGE") {
       console.log("Вам сообщение " + messageObj.text);
@@ -70,25 +72,29 @@ class Chat extends Component {
   };
 
   render() {
+    const { socketConn, currentChat, messageList } = this.state;
     return (
       <div className="container">
         <Navbar />
-        <div className="row">
+        <div className="row current-chat">
           <h3>
-            <span id="currentChat"></span>
+            <span>{currentChat}</span>
           </h3>
         </div>
 
-        <MessageList />
+        <MessageList messageList={messageList} />
 
-        <MessageInput socketConn={""} />
+        <MessageInput
+          setCurrentChat={this.setCurrentChat}
+          socketConn={socketConn}
+        />
 
         <div className="row">
           <div className="col-sm">
             <ChatList setCurrentChat={this.setCurrentChat} />
           </div>
           <div className="col-sm">
-            <UserList />
+            <UserList setCurrentChat={this.setCurrentChat} />
           </div>
         </div>
       </div>

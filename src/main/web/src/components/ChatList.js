@@ -55,17 +55,14 @@ class ChatList extends Component {
         <div className="card-body">
           {chatList &&
             chatList.map(el => (
-              <div className="input-group">
+              <p>
                 <button
-                  className="form-control"
+                  className="form-control input-group-btn"
                   onClick={event => this.loadChatMessage(event, el.name)}
                 >
                   {el.name}
                 </button>
-                <span className="input-group-btn">
-                  <p className="btn btn-secondary">✖</p>
-                </span>
-              </div>
+              </p>
             ))}
           <form onSubmit={this.addChat}>
             <div className="input-group">

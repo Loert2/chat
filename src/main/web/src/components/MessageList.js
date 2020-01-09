@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 class MessageList extends Component {
   render() {
+    const { messageList } = this.props;
     return (
       <div className="row">
         <div className="col-md-12">
@@ -11,7 +12,7 @@ class MessageList extends Component {
                 <th>Список сообщений</th>
               </tr>
             </thead>
-            <tbody id="messagelist"></tbody>
+            {messageList && messageList.map(el => <p className='message'>{el.message}</p>)}
           </table>
         </div>
       </div>
