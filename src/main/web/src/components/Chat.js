@@ -3,8 +3,6 @@ import { connect } from "react-redux";
 import Navbar from "./Navbar";
 import MessageInput from "./MessageInput";
 import MessageList from "./MessageList";
-import ChatList from "./ChatList";
-import UserList from "./UserList";
 
 import * as catalogSelectors from "../store/selectors";
 
@@ -75,7 +73,7 @@ class Chat extends Component {
     const { socketConn, currentChat, messageList } = this.state;
     return (
       <div className="container">
-        <Navbar />
+        <Navbar setCurrentChat={this.setCurrentChat} />
         <div className="row current-chat">
           <h3>
             <span>{currentChat}</span>
@@ -88,15 +86,6 @@ class Chat extends Component {
           setCurrentChat={this.setCurrentChat}
           socketConn={socketConn}
         />
-
-        <div className="row">
-          <div className="col-sm">
-            <ChatList setCurrentChat={this.setCurrentChat} />
-          </div>
-          <div className="col-sm">
-            <UserList setCurrentChat={this.setCurrentChat} />
-          </div>
-        </div>
       </div>
     );
   }

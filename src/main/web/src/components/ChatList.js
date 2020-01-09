@@ -3,6 +3,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 import * as chatService from "../store/chat/service";
+import * as userService from "../store/userList/service";
 import * as catalogSelectors from "../store/selectors";
 
 class ChatList extends Component {
@@ -10,7 +11,9 @@ class ChatList extends Component {
 
   componentDidMount() {
     const { getChatList } = this.props.chatService;
+    const { getUserList } = this.props.userService;
     getChatList();
+    getUserList();
   }
 
   addChat = event => {
@@ -47,8 +50,13 @@ class ChatList extends Component {
     this.props.setCurrentChat(name, "ROOM");
   };
 
+  loadChatMessageUser = (event, name) => {
+    event.preventDefault();
+    this.props.setCurrentChat(name, "PRIVATE");
+  };
+
   render() {
-    const { chatList } = this.props;
+    const { chatList, userList } = this.props;
     return (
       <div className="card my-4">
         <h5 className="card-header">Список чатов</h5>
@@ -61,6 +69,17 @@ class ChatList extends Component {
                   onClick={event => this.loadChatMessage(event, el.name)}
                 >
                   {el.name}
+                </button>
+              </p>
+            ))}
+            {userList &&
+            userList.map(el => (
+              <p>
+                <button
+                  className="form-control input-group-btn"
+                  onClick={event => this.loadChatMessageUser(event, el.fullName)}
+                >
+                  {el.fullName}
                 </button>
               </p>
             ))}
@@ -87,11 +106,13 @@ class ChatList extends Component {
 
 const mapStateToProps = state => ({
   user: catalogSelectors.getUser(state),
+  userList: catalogSelectors.getUsers(state),
   chatList: catalogSelectors.getChats(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-  chatService: bindActionCreators(chatService, dispatch)
+  chatService: bindActionCreators(chatService, dispatch),
+  userService: bindActionCreators(userService, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatList);

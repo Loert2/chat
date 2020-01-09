@@ -42,3 +42,13 @@
   padding-left: 20px;
   margin-bottom: 0px !important;
 }
+
+.input-richt {
+  padding-left: 20px;
+}
+
+.backgroundNavbar {
+  background-color: #5d6471;
+  border-bottom: 4px solid #6ee9fd;
+   border-radius: 10px;
+}
